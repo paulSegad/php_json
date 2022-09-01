@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js" integrity="sha512-CX7sDOp7UTAq+i1FYIlf9Uo27x4os+kGeoT7rgwvY+4dmjqV0IuE/Bl5hVsjnQPQiTOhAX1O2r2j5bjsFBvv/A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Désignation</th>
+        </tr>
+        <?php foreach ($array as  $value) { ?>
+        <tr>
+            <td>
+                <?php echo $value['id']; ?>
+            </td>
+            <td>
+                <?php echo $value['name']; ?>
+            </td>
+            <td>
+                <?php echo $value['designation']; ?>
+                <button id="<?php echo $value['id'] ?>" onclick="call_to_delete(this.id)">Delete</button>
+            </td>
+        </tr>
+        <?php } ?>
+    </table>
+
+    <h1>Création d'un nouvelle utilisateur</h1>
+    <form action="index.php" method="post">
+        <p>Le nom*</p>
+        <input type="text" name="name" required>
+        <p>La désignation*</p>
+        <input type="text" name="designation" required>
+        <br>
+        <button style="margin-top: 20px;" type="submit">Créer</button>
+    </form>
+
+</body>
+
+<script>
+    function call_to_delete(id) {
+        $id = id;
+        console.log($id);
+        $.ajax({
+            //the url to send the data to
+            url: "index.php",
+            //the data to send to
+            data: {
+                method: 'delete_element',
+                id_to_delete: $id
+
+            },
+
+            //type. for eg: GET, POST
+            type: "POST",
+            //on success
+            success: function(data) {
+                location.reload();
+            },
+            //on error
+            error: function() {
+                alert('error');
+
+            }
+        });
+
+
+
+
+
+    }
+</script>
+
+</html>
